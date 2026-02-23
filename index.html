@@ -3,32 +3,199 @@
 <head>
     <title>Vishal Rai | SEO Specialist</title>
     <meta name="description" content="SEO Specialist with experience in Technical SEO, Content Strategy and Website Migrations.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
+        html { scroll-behavior: smooth; }
+
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            margin: 40px;
             background: #f4f4f4;
+            display: flex;
+            transition: background 0.5s ease;
+            overflow-x: hidden;
         }
-        h1 { color: #222; }
+
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+            transition: background 0.5s ease;
+        }
+
+        .sidebar a {
+            padding: 18px 30px;
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .sidebar a:hover {
+            background: #f0f0f0;
+            color: red;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 80px 60px;
+            max-width: 900px;
+        }
+
+        h1 { margin-top: 0; transition: 0.4s ease; }
+        h2 { margin-top: 0; }
+
         .section {
             background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.5s ease;
+        }
+
+        #secondsCounter {
+            color: red;
+            font-family: monospace;
+        }
+
+        .cursor {
+            color: red;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%,50%,100% { opacity:1; }
+            25%,75% { opacity:0; }
+        }
+
+        .spidey {
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Spider Theme */
+        .spiderman-mode {
+            background: #0a0a0f;
+        }
+
+        .spiderman-mode .section {
+            background: #111827;
+            color: #f1f1f1;
+            box-shadow: 0 0 30px rgba(255,0,0,0.25);
+        }
+
+        .spiderman-mode .sidebar {
+            background: linear-gradient(180deg,#8B0000,#001F54);
+        }
+
+        .spiderman-mode h1,
+        .spiderman-mode h2 {
+            color: #ff2d2d;
+        }
+
+        /* Spider FX */
+        #webLine {
+            position: fixed;
+            top: 0;
+            width: 2px;
+            height: 0;
+            background: white;
+            z-index: 9998;
+            transition: height 0.5s ease;
+        }
+
+        #spiderDrop {
+            position: fixed;
+            top: -40px;
+            font-size: 28px;
+            z-index: 9999;
+            transition: top 0.6s ease-in-out;
+        }
+
+        #thwip {
+            position: fixed;
+            font-weight: bold;
+            color: red;
+            font-size: 22px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+
+        .thwip-show {
+            opacity: 1 !important;
+            transform: scale(1.2) !important;
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                justify-content: center;
+                box-shadow: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 40px 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-<h1>Vishal Rai</h1>
-<p>SEO Specialist | Technical SEO | Content Strategy | Website Migrations</p>
-
-<div class="section">
-<h2>About Me</h2>
-<p>I am an SEO professional with proven experience in growing organic traffic and handling large scale migrations.</p>
+<div class="sidebar">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
 </div>
 
-<div class="section">
+<div class="content">
+
+<h1 id="mainTitle">👋 Hi, I’m Vishal Rai</h1>
+
+<div id="about" class="section">
+<h2>About Me</h2>
+
+<p>
+An SEO practitioner — breathing for 
+<span id="secondsCounter">0</span><span class="cursor">|</span> seconds and counting.
+<br><br>
+At one point, I genuinely thought my future job would just involve surfing websites, scrolling social media, and “being online” all day.
+<br><br>
+Little did I know - it’s not about browsing the web. It’s about battling for attention on it.
+<br><br>
+My journey started in 2019 as an SEO intern. Fast forward to today - I lead projects, manage teams, automate tasks, and prepare growth strategies. The climb wasn’t accidental. It was built on obsession with improvement.
+<br><br>
+Outside dashboards and audits?
+<br>
+🕷 I’m a huge 
+<span id="spiderman" class="spidey">Spider-Man</span>
+fan - probably because I relate to “with great power comes great responsibility".
+<br>
+🎬 I’m a certified movie buff - Hindi Me You Can Call Me फ़िल्मी.
+<br>
+🤖 I constantly track what’s happening in the tech world - especially which new AI bot is supposedly coming to take my job next. (So far, we’re collaborating ;)
+</p>
+
+</div>
+
+<div id="projects" class="section">
 <h2>Projects</h2>
 
 <h3>Adotrip</h3>
@@ -42,11 +209,75 @@
 
 </div>
 
-<div class="section">
-<h2>Contact</h2>
-<p>Email: your@email.com</p>
-<p>LinkedIn: https://linkedin.com/in/yourprofile</p>
+<div id="contact" class="section">
+    <h2>Contact</h2>
+
+    <div class="contact-links">
+        <a href="mailto:vishalrai03s@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/vishalrai03/" target="_blank">LinkedIn</a>
+        <a href="https://x.com/03imnyk" target="_blank">Twitter (X)</a>
+    </div>
 </div>
+
+</div>
+
+<div id="webLine"></div>
+<div id="spiderDrop">🕷</div>
+<div id="thwip">THWIP!</div>
+
+<script>
+const birthDate = new Date("December 3, 1996 00:00:00").getTime();
+const counter = document.getElementById("secondsCounter");
+
+function updateSeconds() {
+    const now = new Date().getTime();
+    const diff = Math.floor((now - birthDate) / 1000);
+    counter.textContent = diff.toLocaleString();
+}
+updateSeconds();
+setInterval(updateSeconds, 1000);
+
+const spiderman = document.getElementById("spiderman");
+const spider = document.getElementById("spiderDrop");
+const web = document.getElementById("webLine");
+const thwip = document.getElementById("thwip");
+const title = document.getElementById("mainTitle");
+
+let spiderMode = false;
+
+spiderman.addEventListener("click", () => {
+
+    const rect = spiderman.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+
+    web.style.left = x + "px";
+    spider.style.left = x + "px";
+    thwip.style.left = (x - 40) + "px";
+    thwip.style.top = (rect.top - 30) + "px";
+
+    spiderMode = !spiderMode;
+
+    if (spiderMode) {
+        web.style.height = "250px";
+        spider.style.top = "250px";
+
+        thwip.classList.add("thwip-show");
+        setTimeout(() => thwip.classList.remove("thwip-show"), 400);
+
+        setTimeout(() => {
+            document.body.classList.add("spiderman-mode");
+            title.innerHTML = "🕷 Hi, I’m Spider-Man";
+            spiderman.innerText = "Vishal Rai";
+        }, 400);
+    } else {
+        document.body.classList.remove("spiderman-mode");
+        spider.style.top = "-40px";
+        web.style.height = "0";
+        title.innerHTML = "👋 Hi, I’m Vishal Rai";
+        spiderman.innerText = "Spider-Man";
+    }
+});
+</script>
 
 </body>
 </html>
