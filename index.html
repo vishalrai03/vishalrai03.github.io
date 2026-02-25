@@ -1,77 +1,240 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Vishal Rai | SEO Specialist</title>
+    <meta charset="UTF-8">
     <meta name="description" content="SEO Specialist with experience in Technical SEO, Content Strategy and Website Migrations.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --red: #e63329;
+            --red-dim: rgba(230, 51, 41, 0.12);
+            --dark: #0d0d0f;
+            --surface: #ffffff;
+            --surface2: #f7f7f7;
+            --text: #1a1a1a;
+            --text-muted: #777;
+            --border: rgba(0,0,0,0.07);
+            --sidebar-w: 230px;
+            --radius: 14px;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --shadow-hover: 0 16px 48px rgba(0,0,0,0.12);
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ── RESET ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         html { scroll-behavior: smooth; }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            font-family: 'DM Sans', sans-serif;
+            background: #f0ede8;
+            color: var(--text);
             display: flex;
-            transition: background 0.5s ease;
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
-        .sidebar {
-            width: 220px;
-            height: 100vh;
-            background: white;
+        /* ── NOISE OVERLAY ── */
+        body::before {
+            content: '';
             position: fixed;
-            left: 0;
-            top: 0;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--surface);
+            position: fixed;
+            left: 0; top: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-            transition: background 0.5s ease;
+            justify-content: space-between;
+            padding: 48px 0;
+            box-shadow: 1px 0 0 var(--border);
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+            z-index: 100;
         }
 
-        .sidebar a {
-            padding: 18px 30px;
-            text-decoration: none;
-            color: #444;
+        .sidebar-top {
+            padding: 0 28px;
+        }
+
+        .sidebar-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            transition: color 0.5s;
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
             font-weight: 500;
+            margin-bottom: 40px;
         }
 
-        .sidebar a:hover {
-            background: #f0f0f0;
-            color: red;
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
+        .sidebar-nav a {
+            padding: 10px 28px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-left: 2px solid transparent;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: var(--red);
+            border-left-color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .sidebar-bottom {
+            padding: 0 28px;
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── CONTENT ── */
         .content {
-            margin-left: 240px;
-            padding: 80px 60px;
-            max-width: 900px;
+            margin-left: var(--sidebar-w);
+            padding: 70px 64px 100px;
+            max-width: calc(900px + var(--sidebar-w));
+            width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
-        h1 { margin-top: 0; }
-        h2 { margin-top: 0; }
+        /* ── HERO ── */
+        .hero {
+            margin-bottom: 60px;
+            padding-top: 10px;
+        }
 
+        .hero-eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--red);
+            font-weight: 600;
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp 0.6s 0.1s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(42px, 5.5vw, 68px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            color: var(--text);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.2s forwards;
+            transition: color 0.5s;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--red);
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 480px;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.35s forwards;
+        }
+
+        /* ── SECTIONS ── */
         .section {
-            background: white;
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            transition: all 0.4s ease;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform var(--transition), box-shadow var(--transition), background 0.5s ease, border-color 0.5s ease;
+            opacity: 0;
+            animation: fadeUp 0.6s forwards;
         }
 
         .section:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
         }
 
+        .section:nth-child(1) { animation-delay: 0.4s; }
+        .section:nth-child(2) { animation-delay: 0.5s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.7s; }
+        .section:nth-child(5) { animation-delay: 0.8s; }
+        .section:nth-child(6) { animation-delay: 0.9s; }
+
+        .section-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--red);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            margin-bottom: 20px;
+            transition: color 0.5s;
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            transition: color 0.5s;
+        }
+
+        /* ── SECONDS COUNTER ── */
         #secondsCounter {
-            color: red;
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--red);
+            font-size: 13px;
+            background: var(--red-dim);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
         .cursor {
-            color: red;
+            color: var(--red);
             animation: blink 1s infinite;
         }
 
@@ -81,61 +244,285 @@
         }
 
         .spidey {
-            color: red;
+            color: var(--red);
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
         }
 
-        /* Contact Styling */
+        /* ── PROJECTS ── */
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .project-card {
+            background: var(--surface2);
+            border-radius: 10px;
+            padding: 22px 24px;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--red);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.35s ease;
+        }
+
+        .project-card:hover::before { transform: scaleY(1); }
+
+        .project-card:hover {
+            background: white;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+        }
+
+        .project-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 18px;
+            color: var(--text);
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+            transition: color 0.5s;
+        }
+
+        .project-card p {
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+            background: var(--red-dim);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        /* ── CASE STUDIES ── */
+        .case-studies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .case-card {
+            background: var(--surface2);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+        }
+
+        .case-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.13);
+        }
+
+        .case-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            background: var(--red-dim);
+        }
+
+        .case-info {
+            padding: 14px 18px;
+        }
+
+        .case-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 5px;
+            transition: color 0.5s;
+        }
+
+        .case-info p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── SKILLS SECTION ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .skill-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:hover {
+            border-color: var(--red);
+            background: var(--red-dim);
+            transform: scale(1.03);
+        }
+
+        .skill-item .skill-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .skill-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+            transition: color 0.5s;
+        }
+
+        .skill-desc {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .skill-bar-wrap {
+            margin-top: 10px;
+            height: 3px;
+            background: var(--border);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: var(--red);
+            border-radius: 99px;
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ── TIMELINE (Experience) ── */
+        .timeline {
+            margin-top: 8px;
+            padding-left: 20px;
+            border-left: 2px solid var(--border);
+            transition: border-color 0.5s;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 28px 28px;
+        }
+
+        .timeline-item:last-child { padding-bottom: 0; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 6px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--red);
+            transition: background 0.5s, transform 0.25s;
+        }
+
+        .timeline-item:hover::before {
+            background: var(--red);
+            transform: scale(1.3);
+        }
+
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--red);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-role {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 3px;
+            transition: color 0.5s;
+        }
+
+        .timeline-company {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        /* ── CONTACT ── */
         .contact-links {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
-            margin-top: 15px;
+            margin-top: 16px;
         }
 
         .contact-links a {
             text-decoration: none;
-            color: #444;
+            color: var(--text);
             font-weight: 500;
-            padding: 8px 14px;
-            border-radius: 6px;
-            background: #f0f0f0;
-            transition: 0.3s ease;
+            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            letter-spacing: 0.3px;
         }
 
         .contact-links a:hover {
-            background: red;
+            background: var(--red);
             color: white;
+            border-color: var(--red);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 51, 41, 0.3);
         }
 
-        /* Spider Theme */
-        .spiderman-mode {
-            background: #0a0a0f;
-        }
-
-        .spiderman-mode .section {
-            background: #111827;
-            color: #f1f1f1;
-            box-shadow: 0 0 30px rgba(255,0,0,0.25);
-        }
-
-        .spiderman-mode .sidebar {
-            background: linear-gradient(180deg,#8B0000,#001F54);
-        }
-
-        .spiderman-mode h1,
-        .spiderman-mode h2 {
-            color: #ff2d2d;
-        }
-
-        /* Spider FX */
+        /* ── SPIDER FX ── */
         #webLine {
             position: fixed;
             top: 0;
             width: 2px;
             height: 0;
-            background: white;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
             z-index: 9998;
             transition: height 0.5s ease;
         }
@@ -145,27 +532,162 @@
             top: -40px;
             font-size: 28px;
             z-index: 9999;
-            transition: top 0.6s ease-in-out;
+            transition: top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
 
         #thwip {
             position: fixed;
-            font-weight: bold;
-            color: red;
-            font-size: 22px;
+            font-family: 'DM Serif Display', serif;
+            font-style: italic;
+            font-size: 24px;
+            color: var(--red);
             opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.3s ease;
+            transform: scale(0.5) rotate(-8deg);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 10000;
+            text-shadow: 0 2px 10px rgba(230, 51, 41, 0.4);
         }
 
         .thwip-show {
             opacity: 1 !important;
-            transform: scale(1.2) !important;
+            transform: scale(1.3) rotate(-8deg) !important;
         }
 
-        /* Mobile */
+        /* ── SPIDERMAN MODE ── */
+        .spiderman-mode {
+            background: #080810;
+            color: #e8e8f0;
+        }
+
+        .spiderman-mode body { color: #e8e8f0; }
+
+        .spiderman-mode .section {
+            background: #111827;
+            border-color: rgba(230, 51, 41, 0.2);
+            box-shadow: 0 4px 30px rgba(230, 51, 41, 0.08);
+        }
+
+        .spiderman-mode .section:hover {
+            box-shadow: 0 16px 48px rgba(230, 51, 41, 0.18);
+        }
+
+        .spiderman-mode .sidebar {
+            background: #0d0d1a;
+            border-right: 1px solid rgba(230, 51, 41, 0.15);
+        }
+
+        .spiderman-mode .sidebar-logo,
+        .spiderman-mode .section h2,
+        .spiderman-mode .hero h1 {
+            color: #f5f5f5;
+        }
+
+        .spiderman-mode .section p,
+        .spiderman-mode .timeline-desc { color: #aaa; }
+
+        .spiderman-mode .project-card,
+        .spiderman-mode .skill-item,
+        .spiderman-mode .case-card {
+            background: #1a2035;
+            border-color: rgba(255,255,255,0.06);
+        }
+
+        .spiderman-mode .project-card h3,
+        .spiderman-mode .skill-name,
+        .spiderman-mode .timeline-role,
+        .spiderman-mode .case-info h4 {
+            color: #f0f0f0;
+        }
+
+        .spiderman-mode .project-card:hover,
+        .spiderman-mode .skill-item:hover {
+            background: #1f2d4a;
+        }
+
+        .spiderman-mode .contact-links a {
+            background: #1a2035;
+            border-color: rgba(255,255,255,0.07);
+            color: #ddd;
+        }
+
+        .spiderman-mode .hero-sub,
+        .spiderman-mode .project-card p,
+        .spiderman-mode .case-info p { color: #888; }
+
+        .spiderman-mode #secondsCounter { background: rgba(230,51,41,0.2); }
+
+        .spiderman-mode .timeline { border-color: rgba(230,51,41,0.25); }
+
+        .spiderman-mode .skill-bar-wrap { background: rgba(255,255,255,0.06); }
+
+        .spiderman-mode .timeline-item::before { background: #111827; }
+
+        /* ── WEB CURSOR (Spider mode) ── */
+        .spiderman-mode { cursor: crosshair; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ── FLOATING BADGE ── */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #2d6a4f;
+            background: #d8f3dc;
+            padding: 5px 12px;
+            border-radius: 99px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.6s 0.05s forwards;
+        }
+
+        .status-dot {
+            width: 7px; height: 7px;
+            background: #40c975;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(64, 201, 117, 0.4); }
+            50% { box-shadow: 0 0 0 5px rgba(64, 201, 117, 0); }
+        }
+
+        .spiderman-mode .status-badge {
+            background: rgba(64,201,117,0.1);
+            color: #40c975;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+            transition: background 0.5s;
+        }
+
+        /* ── MOBILE ── */
         @media (max-width: 768px) {
+            :root { --sidebar-w: 0px; }
+
             body { flex-direction: column; }
 
             .sidebar {
@@ -174,250 +696,351 @@
                 position: relative;
                 flex-direction: row;
                 justify-content: center;
+                padding: 12px 0;
                 box-shadow: none;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sidebar-top, .sidebar-bottom { display: none; }
+
+            .sidebar-nav {
+                flex-direction: row;
+                gap: 0;
+            }
+
+            .sidebar-nav a {
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                padding: 10px 16px;
+            }
+
+            .sidebar-nav a:hover,
+            .sidebar-nav a.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--red);
             }
 
             .content {
                 margin-left: 0;
-                padding: 40px 20px;
+                padding: 32px 20px 80px;
+            }
+
+            .project-grid, .skills-grid {
+                grid-template-columns: 1fr;
             }
         }
-        
-        /* Case Study Image Section */
-.case-studies {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.case-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    transition: 0.4s ease;
-}
-
-.case-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-.case-card img {
-    width: 100%;
-    display: block;
-}
-
-.case-info {
-    padding: 15px 20px;
-}
-
-.case-info h4 {
-    margin: 0 0 8px 0;
-}
-
-.case-info p {
-    font-size: 14px;
-    margin: 0;
-    color: #666;
-}
-
-/* Spider Mode Support */
-.spiderman-mode .case-card {
-    background: #1f2937;
-}
-
-.spiderman-mode .case-info p {
-    color: #ccc;
-}
     </style>
 </head>
 <body>
 
+<!-- ── SIDEBAR ── -->
 <div class="sidebar">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+    <div class="sidebar-top">
+        <div class="sidebar-logo">Vishal Rai</div>
+        <div class="sidebar-title">SEO Specialist</div>
+        <nav class="sidebar-nav">
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+    <div class="sidebar-bottom">
+        Based in India<br>
+        Open to opportunities
+    </div>
 </div>
 
+<!-- ── MAIN CONTENT ── -->
 <div class="content">
 
-<h1 id="mainTitle">👋 Hi, I’m Vishal Rai</h1>
-
-<div id="about" class="section">
-<h2>About Me</h2>
-
-<p>
-An SEO practitioner — breathing for 
-<span id="secondsCounter">0</span><span class="cursor">|</span> seconds and counting.
-<br><br>
-At one point, I genuinely thought my future job would just involve surfing websites, scrolling social media, and “being online” all day.
-<br><br>
-Little did I know - it’s not about browsing the web. It’s about battling for attention on it.
-<br><br>
-My journey started in 2019 as an SEO intern. Fast forward to today - I lead projects, manage teams, automate tasks, and prepare growth strategies. The climb wasn’t accidental. It was built on obsession with improvement.
-<br><br>
-Outside dashboards and audits?
-<br>
-🕷 I’m a huge 
-<span id="spiderman" class="spidey">Spider-Man</span>
-fan - probably because I relate to “with great power comes great responsibility".
-<br>
-🎬 I’m a certified movie buff - Hindi Me You Can Call Me फ़िल्मी.
-<br>
-🤖 I constantly track what’s happening in the tech world - especially which new AI bot is supposedly coming to take my job next. (So far, we’re collaborating ;)
-</p>
-</div>
-
-<div id="projects" class="section">
-<h2>Projects</h2>
-
-<h3>Adotrip</h3>
-<p>
-Took ownership after heavy Google Core Update impact.<br>
-Traffic was continuously declining and hit ~5K/month at takeover.<br>
-Scaled to 50K/month.<br>
-Managed more than 50k URls. Fixed major technical SEO issues.<br>
-Improved crawlability, indexing & performance.<br>
-Stabilized growth under algorithm volatility.
-</p>
-
-<h3>Narayana Health</h3>
-<p>
-Played a key role in planning and executing content strategy <br>
-Coordinated closely with the content team for structured and timely delivery <br>
-Acted as primary Point of Contact (POC) for client communication <br>
-Managed expectations and project timelines as a project lead <br>
-Identified technical SEO issues and suggested enhancement strategies <br>
-</p>
-
-<h3>BASF</h3>
-<p>
-Managed one business vertical independently.<br>
-Handled WordPress → Laravel migration.<br>
-Maintained SEO stability during migration.<br>
-Implemented International SEO (hreflang).<br>
-Achieved 3X growth in 3 months.
-
-<h3>Olivkart (E-commerce SEO)</h3>
-<p>
-Optimized product and category pages for improved rankings<br>
-Resolved Google Merchant Center issues<br>
-Improved crawl budget by fixing robots.txt for dynamic URLs<br>
-Implemented additional technical and International SEO improvements<br>
-Provided 2x improvement in sales in just 6 weeks
-</p>
-</div>  <!-- end of projects section -->
-<div class="section">
-    <h2>Project Highlights</h2>
-
-    <div class="case-studies">
-
-        <div class="case-card">
-            <img src="adotrip-screenshot.jpg" alt="Adotrip Traffic Growth">
-            <div class="case-info">
-                <h4>Adotrip (<i>www.adotrip.com</i>)</h4>
-                <p>Recovered traffic from 5K to 50K/month after core update impact.</p>
-            </div>
-        </div>
-
-        <div class="case-card">
-            <img src="narayana-screenshot.jpg" alt="Narayana Health SEO Strategy">
-            <div class="case-info">
-                <h4>Narayana Health (<i>www.narayanahealth.org</i>)</h4>
-                <p>Led content & technical SEO strategy execution.</p>
-            </div>
-        </div>
-
-        <div class="case-card">
-            <img src="basf-screenshot.jpg" alt="BASF Migration & Growth">
-            <div class="case-info">
-                <h4>BASF (<i>www.basf.com</i>)</h4>
-                <p>Managed migration & achieved 3X growth in 3 months.</p>
-            </div>
-        </div>
-        <div class="case-card">
-            <img src="olivkart-screenshot.jpg" alt="Olivkart Sales Improved by 2X">
-            <div class="case-info">
-                <h4>Olivkart (<i>www.olivkart.com</i>)</h4>
-                <p>Improved Sales and Traffic by 2X just in 6 weeks</p>
-            </div>
-        </div>
-
+    <!-- HERO -->
+    <div class="hero">
+        <div class="status-badge"><span class="status-dot"></span> Available for new projects</div>
+        <div class="hero-eyebrow">SEO Specialist · Since 2019</div>
+        <h1 id="mainTitle">Hi, I'm<br><em>Vishal Rai</em></h1>
+        <p class="hero-sub">I help websites grow through strategy, not guesswork — Technical SEO, Content, Migrations, and everything in between.</p>
     </div>
-</div>
 
-<div id="contact" class="section">
-    <h2>Contact</h2>
-
-    <div class="contact-links">
-        <a href="mailto:vishalrai03s@gmail.com">Email</a>
-        <a href="https://www.linkedin.com/in/vishalrai03/" target="_blank">LinkedIn</a>
-        <a href="https://x.com/03imnyk" target="_blank">Twitter (X)</a>
+    <!-- ABOUT -->
+    <div id="about" class="section reveal">
+        <div class="section-label">About</div>
+        <h2>A little about me</h2>
+        <p>
+            An SEO practitioner — breathing for
+            <span id="secondsCounter">0</span><span class="cursor">|</span> seconds and counting.
+        </p>
+        <div class="divider"></div>
+        <p>
+            At one point, I genuinely thought my future job would involve surfing websites and scrolling social media all day.
+            Little did I know — it's not about browsing the web. It's about battling for attention on it.
+        </p>
+        <br>
+        <p>
+            My journey started in 2019 as an SEO intern. Fast forward to today — I lead projects, manage teams, automate tasks, and prepare growth strategies. The climb wasn't accidental. It was built on obsession with improvement.
+        </p>
+        <div class="divider"></div>
+        <p>
+            🕷 I'm a huge <span id="spiderman" class="spidey">Spider-Man</span> fan — probably because I relate to <em>"with great power comes great responsibility."</em><br>
+            🎬 Certified movie buff — Hindi me you can call me फ़िल्मी.<br>
+            🤖 I constantly track what's happening in tech — especially which AI bot is coming for my job next. (So far, we're collaborating.)
+        </p>
     </div>
-</div>
+
+    <!-- EXPERIENCE -->
+    <div id="experience" class="section reveal">
+        <div class="section-label">Background</div>
+        <h2>Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2023 — Present</div>
+                <div class="timeline-role">SEO Lead / Project Manager</div>
+                <div class="timeline-company">Digital Agency (Multi-client)</div>
+                <div class="timeline-desc">Leading end-to-end SEO projects across travel, healthcare, chemicals, and e-commerce verticals. Managing teams, client communication, and growth strategy.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2020 — 2023</div>
+                <div class="timeline-role">SEO Analyst</div>
+                <div class="timeline-company">SEO Agency - With Well Known SEO Coach</div>
+                <div class="timeline-desc">Hands-on technical SEO, Local SEO, content optimization, Entity Building, and on-page improvements across multiple client domains.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2019 — 2020</div>
+                <div class="timeline-role">SEO Intern - Executive Level</div>
+                <div class="timeline-company">SEO Agency</div>
+                <div class="timeline-desc">Started the journey — keyword research, link building, basic on-page SEO, and learning the fundamentals of how search engines work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div id="skills" class="section reveal">
+        <div class="section-label">Expertise</div>
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <span class="skill-icon">🔧</span>
+                <div class="skill-name">Technical SEO</div>
+                <div class="skill-desc">Crawlability, indexing, Core Web Vitals, schema markup</div>
+                <div class="skill-bar-wrap"><div class="skill-bar" data-width="95"></div></div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">✍️</span>
+                <div class="skill-name">Content Strategy</div>
+                <div class="skill-desc">Topical authority, content clusters, search intent mapping</div>
+                <div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🌐</span>
+                <div class="skill-name">International SEO</div>
+                <div class="skill-desc">Hreflang, geo-targeting, multilingual architecture</div>
+                <div class="skill-bar-wrap"><div class="skill-bar" data-width="82"></div></div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🚀</span>
+                <div class="skill-name">Website Migrations</div>
+                <div class="skill-desc">Platform migrations with zero traffic loss</div>
+                <div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">📊</span>
+                <div class="skill-name">Analytics & Reporting</div>
+                <div class="skill-desc">GA4, GSC, Screaming Frog, Looker Studio</div>
+                <div class="skill-bar-wrap"><div class="skill-bar" data-width="85"></div></div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🤖</span>
+                <div class="skill-name">SEO Automation</div>
+                <div class="skill-desc">Python scripts, AI-assisted workflows, bulk operations</div>
+                <div class="skill-bar-wrap"><div class="skill-bar" data-width="75"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div id="projects" class="section reveal">
+        <div class="section-label">Work</div>
+        <h2>Projects</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <span class="project-tag">Travel · Recovery</span>
+                <h3>Adotrip</h3>
+                <p>Took ownership after heavy Core Update impact. Traffic was at ~5K/month at takeover. Scaled to 50K/month. Managed 50K+ URLs, fixed major technical issues, improved crawlability and indexing.</p>
+            </div>
+            <div class="project-card">
+                <span class="project-tag">Healthcare · Strategy</span>
+                <h3>Narayana Health</h3>
+                <p>Led content & technical SEO strategy. Coordinated with content teams, acted as primary client POC, managed project timelines and expectation setting throughout.</p>
+            </div>
+            <div class="project-card">
+                <span class="project-tag">Enterprise · Migration</span>
+                <h3>BASF</h3>
+                <p>Managed one business vertical independently. Handled WordPress → Laravel migration with SEO stability. Implemented International SEO (hreflang). Achieved 3× growth in 3 months.</p>
+            </div>
+            <div class="project-card">
+                <span class="project-tag">E-commerce · Growth</span>
+                <h3>Olivkart</h3>
+                <p>Optimized product & category pages. Resolved Google Merchant Center issues, improved crawl budget via robots.txt, implemented technical & International SEO. 2× sales in 6 weeks.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT HIGHLIGHTS (Case Studies) -->
+    <div class="section reveal">
+        <div class="section-label">Highlights</div>
+        <h2>Project Snapshots</h2>
+        <div class="case-studies">
+            <div class="case-card">
+                <img src="adotrip-screenshot.jpg" alt="Adotrip Traffic Growth">
+                <div class="case-info">
+                    <h4>Adotrip <span style="font-weight:400;color:var(--text-muted)">· adotrip.com</span></h4>
+                    <p>5K → 50K/month after core update recovery</p>
+                </div>
+            </div>
+            <div class="case-card">
+                <img src="narayana-screenshot.jpg" alt="Narayana Health">
+                <div class="case-info">
+                    <h4>Narayana Health <span style="font-weight:400;color:var(--text-muted)">· narayanahealth.org</span></h4>
+                    <p>Led content & technical SEO strategy</p>
+                </div>
+            </div>
+            <div class="case-card">
+                <img src="basf-screenshot.jpg" alt="BASF Migration">
+                <div class="case-info">
+                    <h4>BASF <span style="font-weight:400;color:var(--text-muted)">· basf.com</span></h4>
+                    <p>Migration + 3× organic growth in 3 months</p>
+                </div>
+            </div>
+            <div class="case-card">
+                <img src="olivkart-screenshot.jpg" alt="Olivkart Sales">
+                <div class="case-info">
+                    <h4>Olivkart <span style="font-weight:400;color:var(--text-muted)">· olivkart.com</span></h4>
+                    <p>2× sales improvement in just 6 weeks</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div id="contact" class="section reveal">
+        <div class="section-label">Let's talk</div>
+        <h2>Contact</h2>
+        <p style="color: var(--text-muted); margin-bottom: 4px;">Got a project, opportunity, or just want to talk SEO?</p>
+        <div class="contact-links">
+            <a href="mailto:vishalrai03s@gmail.com">📧 Email</a>
+            <a href="https://www.linkedin.com/in/vishalrai03/" target="_blank">LinkedIn</a>
+            <a href="https://x.com/03imnyk" target="_blank">Twitter (X)</a>
+        </div>
+    </div>
 
 </div>
 
+<!-- SPIDER FX -->
 <div id="webLine"></div>
 <div id="spiderDrop">🕷</div>
 <div id="thwip">THWIP!</div>
 
 <script>
-const birthDate = new Date("December 3, 1996 00:00:00").getTime();
-const counter = document.getElementById("secondsCounter");
+    /* ── SECONDS COUNTER ── */
+    const birthDate = new Date("December 3, 1996 00:00:00").getTime();
+    const counter = document.getElementById("secondsCounter");
 
-function updateSeconds() {
-    const now = new Date().getTime();
-    const diff = Math.floor((now - birthDate) / 1000);
-    counter.textContent = diff.toLocaleString();
-}
-updateSeconds();
-setInterval(updateSeconds, 1000);
-
-const spiderman = document.getElementById("spiderman");
-const spider = document.getElementById("spiderDrop");
-const web = document.getElementById("webLine");
-const thwip = document.getElementById("thwip");
-const title = document.getElementById("mainTitle");
-
-let spiderMode = false;
-
-spiderman.addEventListener("click", () => {
-
-    const rect = spiderman.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-
-    web.style.left = x + "px";
-    spider.style.left = x + "px";
-    thwip.style.left = (x - 40) + "px";
-    thwip.style.top = (rect.top - 30) + "px";
-
-    spiderMode = !spiderMode;
-
-    if (spiderMode) {
-        web.style.height = "250px";
-        spider.style.top = "250px";
-
-        thwip.classList.add("thwip-show");
-        setTimeout(() => thwip.classList.remove("thwip-show"), 400);
-
-        setTimeout(() => {
-            document.body.classList.add("spiderman-mode");
-            title.innerHTML = "🕷 Hi, I’m Spider-Man";
-            spiderman.innerText = "Vishal Rai";
-        }, 400);
-    } else {
-        document.body.classList.remove("spiderman-mode");
-        spider.style.top = "-40px";
-        web.style.height = "0";
-        title.innerHTML = "👋 Hi, I’m Vishal Rai";
-        spiderman.innerText = "Spider-Man";
+    function updateSeconds() {
+        const now = new Date().getTime();
+        const diff = Math.floor((now - birthDate) / 1000);
+        counter.textContent = diff.toLocaleString();
     }
-});
-</script>
+    updateSeconds();
+    setInterval(updateSeconds, 1000);
 
+    /* ── SPIDERMAN EASTER EGG ── */
+    const spiderman = document.getElementById("spiderman");
+    const spider = document.getElementById("spiderDrop");
+    const web = document.getElementById("webLine");
+    const thwip = document.getElementById("thwip");
+    const title = document.getElementById("mainTitle");
+
+    let spiderMode = false;
+
+    spiderman.addEventListener("click", () => {
+        const rect = spiderman.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+
+        web.style.left = x + "px";
+        spider.style.left = x + "px";
+        thwip.style.left = (x - 40) + "px";
+        thwip.style.top = (rect.top - 30) + "px";
+
+        spiderMode = !spiderMode;
+
+        if (spiderMode) {
+            web.style.height = "280px";
+            spider.style.top = "280px";
+
+            thwip.classList.add("thwip-show");
+            setTimeout(() => thwip.classList.remove("thwip-show"), 500);
+
+            setTimeout(() => {
+                document.body.classList.add("spiderman-mode");
+                title.innerHTML = "Swing into<br><em>Spider-Mode</em>";
+                spiderman.innerText = "Vishal Rai";
+            }, 400);
+        } else {
+            document.body.classList.remove("spiderman-mode");
+            spider.style.top = "-40px";
+            web.style.height = "0";
+            title.innerHTML = "Hi, I'm<br><em>Vishal Rai</em>";
+            spiderman.innerText = "Spider-Man";
+        }
+    });
+
+    /* ── ACTIVE NAV HIGHLIGHT ── */
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    /* ── SCROLL REVEAL ── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ── SKILL BARS ANIMATE ON VISIBLE ── */
+    const skillBars = document.querySelectorAll('.skill-bar');
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                bar.style.width = bar.dataset.width + '%';
+                barObserver.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    skillBars.forEach(b => barObserver.observe(b));
+
+</script>
 </body>
 </html>
